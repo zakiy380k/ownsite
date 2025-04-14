@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Блог</title>
+    <link rel="stylesheet" href="/static/style2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="blog-container">    
+
+        <h1>Все посты</h1>
+
+        <hr>
+        {% if posts %}
+            <ul>
+            {% for post in posts %}
+            <li>
+                <div class="blog-post">
+                    <form action="/post/delete/{{ post.id }}" method="post" class="delete-button-form">
+                        <button type="submit">Удалить</button>
+                    </form>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    <small>Автор: {{ post.author }}</small>
+                    {% if post.image_path %}
+                        <img src="/{{ post.image_path }}" alt="Изображение поста" style="max-width:400px; width:100%; border-radius:10px; margin-top:15px;">
+                    {% endif %}
+
+                </div>
+                <div class="comments">
+                    <h4>Комментарии:</h4>
+                    <ul>
+                        {% for comment in comments %}
+                            {% if comment.post_id == post.id %}
+                                <li><strong>{{ comment.author }}:</strong> {{ comment.content }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <form action="/comment/add/{{ post.id }}" method="post">
+                        <textarea name="content" rows="2" placeholder="Оставьте комментарий..." required></textarea><br>
+                        <button type="submit">Добавить комментарий</button>
+                    </form>
+                </div>
+                
+                <hr>
+            </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-posts">Пока что постов нет.</p>
+        {% endif %}
+        <div class="top-right-buttons">
+            <form action="/logout" method="post" style="display: inline;">
+                <button class="exit-button" type="submit">Выйти</button>
+                <a href="/profile">
+                    <button type="button" class="sumbit">Профиль</button>
+                </a>
+                <a href="/post/new">
+                    <button type="button" class="new-post">Новый пост</button>
+                </a>
+            </form>
+        </div>
+        <div class="pagination-fixed">
+            {% if page > 1 %}
+              <a href="/posts?page={{ page - 1 }}&limit={{ limit }}">← Назад</a>
+            {% endif %}
+          
+            <span style="margin: 0 10px;">Страница {{ page }}</span>
+          
+            {% if total_posts > page * limit %}
+              <a href="/posts?page={{ page + 1 }}&limit={{ limit }}">Вперёд →</a>
+            {% endif %}
+          </div>
+          
+    </div>
+</body>
+</html>

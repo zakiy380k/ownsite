@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add User</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form method="post" id="registerForm">
+            <input name="login" type="login" placeholder="Login" required><br>
+            <input name="password" type="password" placeholder="Password" required><br>
+            <input name="first_name" type="first name" placeholder="First Name" required><br>
+            <input name="last_name" type="last name" placeholder="Last Name" required><br>
+
+            <select id="birthYear" name="birth_date" required></select><br><br>
+            <div class="buttons-container">
+                <button type="submit" class="register-button">Add</button>
+                <a href="/login" class="login-link">
+                    <button type="button" class="login-button">Log in</button>
+                </a>
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+        const select = document.getElementById("birthYear");
+        const currentYear = new Date().getFullYear();
+
+        // Добавляем года от текущего до 1900
+        for (let year = currentYear; year >= 1900; year--) {
+            const option = document.createElement("option");
+            option.value = year;
+            option.textContent = year;
+            select.appendChild(option);
+        }
+
+        // Проверка возраста при отправке формы
+        document.getElementById("registerForm").addEventListener("submit", function (e) {
+            const birthYear = parseInt(select.value);
+            const age = currentYear - birthYear;
+
+            if (age < 18) {
+                e.preventDefault(); // Отменяем отправку формы
+                alert("Тебе должно быть не меньше 18 лет!");
+            }
+        });
+    </script>
+</body>
+</html>

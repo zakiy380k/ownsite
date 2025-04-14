@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="user-list-container">
+        <h1>User List</h1>
+        <ul class="user-list">
+            {% for user in users %}
+                <li>{{ user.first_name }} {{ user.last_name }} ({{ user.login }} {{user.password}})</li>
+            {% endfor %}
+        </ul>
+        <form action="/logout" method="post">
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>

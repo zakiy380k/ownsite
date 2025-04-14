@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль {{ user.login }}</title>
+    <link rel="stylesheet" href="/static/profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <h1>Профиль пользователя</h1>
+        </div>
+        <div class="profile-info">
+            <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Логин:</strong> {{ user.login }}</p>
+            <p><strong>Дата рождения:</strong> {{ user.birth_date }}</p>
+            
+        </div>
+
+        <h2>Мои посты</h2>
+        <div class="posts">
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="post-card">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.content }}</p>
+                        {% if post.image_path %}
+                        <img src="/{{ post.image_path }}" alt="Изображение поста" style="max-width:400px; width:100%; border-radius:10px; margin-top:15px;">    
+                        {% endif %}
+
+                    </div>
+                    <div class="comments">
+                        <h4>Комментарии:</h4>
+                        <ul>
+                            {% for comment in comments %}
+                                {% if comment.post_id == post.id %}
+                                    <li><strong>{{ comment.author }}:</strong> {{ comment.content }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>У вас пока нет постов.</p>
+            {% endif %}
+        </div>
+        <div class="top-right-buttons">
+            <a href="/posts">
+                <button class="back-posts"type="sumbit">← Назад к постам</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

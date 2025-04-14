@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать пост</title>
+    <link rel="stylesheet" href="/static/style2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="top-right-buttons">
+
+            <a href="/posts">
+                <button type="button" class="back-posts">← Назад к постам</button>
+            </a>
+        
+    </div>
+
+    <h1>Новый пост</h1>
+    <form action="/post/new" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Заголовок" required>
+        <textarea name="content" placeholder="Содержимое поста" required></textarea>
+        <input type="file" name="image">
+        <button type="submit">Создать пост</button>
+    </form>
+</body>
+
+</html>
